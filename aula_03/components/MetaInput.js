@@ -10,7 +10,7 @@ function metaInputHandler(inputText){
     setInputMetaText(inputText)
   }; 
 
-  function addMetaHandler(){
+function addMetaHandler(){
     props.onAddMeta(inputMetaText);
     setInputMetaText('');
   }
@@ -23,6 +23,7 @@ return(
         <TextInput style={styles.inputText} 
         placeholder={rotulo_input_meta}  
         onChangeText={metaInputHandler}
+        value={inputMetaText}
     />
       </View>
 
@@ -31,13 +32,10 @@ return(
         onPress={addMetaHandler} />
       </View>
  </View>
-
 );
-
 }
 
 export default MetaInput;
-
 
 const styles = StyleSheet.create({
 

@@ -1,4 +1,4 @@
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useState } from 'react';
 import MetasList from './components/MetasList';
 import MetaInput from './components/MetaInput';
@@ -24,22 +24,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   mainContainer: {
     padding: 30,
     flex: 1,
     flexDirection: 'column',
   },
-  inputText: {
-    borderColor: '#cccccc',
-    borderWidth: 1
-  },
+
   metaContainer: {
     flex: 15,
   }
-  
 });
 
