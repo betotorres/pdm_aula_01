@@ -1,37 +1,20 @@
-import { StyleSheet, View } from 'react-native';
-import { useState } from 'react';
-import MetasList from './components/MetasList';
-import MetaInput from './components/MetaInput';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
-
-  const [metas, setMetas] = useState([]);
-
-  function adicionarMetaHandler(inputMeta){
-    setMetas([...metas, inputMeta]);
-  }
-
   return (
-    <View style={styles.mainContainer}>
-
-        <MetaInput onAddMeta={adicionarMetaHandler} />
-
-      <View style={styles.metaContainer}>
-          <MetasList array={metas} />
-      </View>
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    padding: 30,
+  container: {
     flex: 1,
-    flexDirection: 'column',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
-  metaContainer: {
-    flex: 15,
-  }
 });
-
