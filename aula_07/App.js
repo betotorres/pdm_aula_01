@@ -1,8 +1,9 @@
 import { StyleSheet, View, Image, Text } from 'react-native';
-import { useState } from 'react';
 import MetasList from './components/MetasList';
 import MetaInput from './components/MetaInput';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function App() {
@@ -18,6 +19,29 @@ export default function App() {
     const novasMetas = metas.filter(meta => meta.id !== id);
     setMetas(novasMetas);
   }
+
+
+  // Carrega a lista ao abrir o app
+  useEffect(() => {
+    async function carregarDados() {
+      const dadosSalvos = await AsyncStorage.getItem('@listaTarefas');
+      if (dadosSalvos) {
+        setMetas(JSON.parse(dadosSalvos));
+        console.log('Dados carregados do AsyncStorage:', JSON.parse(dadosSalvos));
+      }
+    }
+    carregarDados();
+  }, []);
+
+
+  // Salva a lista no AsyncStorage sempre que ela for alterada
+  useEffect(() => {
+
+    AsyncStorage.setItem('@listaTarefas', JSON.stringify(metas));
+    console.log('Dados armazenados do AsyncStorage:', JSON.stringify(metas));
+  }, [metas]);
+
+
 
   return (
     <SafeAreaProvider>
