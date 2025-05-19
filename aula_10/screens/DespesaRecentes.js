@@ -1,6 +1,13 @@
-import DespesaSaida from '../components/despesa/DespesaSaida';
+import { useEffect, useContext, useState } from 'react'
+import DespesaSaida from '../components/despesa/DespesaSaida'
+import {collection, onSnapshot} from 'firebase/firestore'
+import { db } from '../src/firebaseConnection'
+import {AuthContext} from '../src/auth-contexto';
 
 function DespesaRecentes() {
+  const { uid } = useContext(AuthContext)
+  const [despesas, setDespesas] = useState([])
+
   function filtrarUltimos7Dias(despesas) {
     const hoje = new Date();
     const seteDiasAtras = new Date();
@@ -10,23 +17,25 @@ function DespesaRecentes() {
         return despesa.data >= seteDiasAtras && despesa.data <= hoje;
     });
   }
-  const DUMMY_DESPESAS = [
-    {
-        id: '1',
-        descricao: 'Conta de luz',
-        valor: 100.99,
-        data: new Date(2025, 2, 11)
-    },
-    {
-        id: '2',
-        descricao: 'Conta de Agua',
-        valor: 40.99,
-        data: new Date(2025,4,10)
-    }]
+  useEffect(() => {
+      if (!uid) return;
+    
+      const unsubscribe = onSnapshot(collection(db, uid), snapshot => {
+        const lista = snapshot.docs.map(doc => ({
+          id: doc.id,
+          descricao: doc.data().descricao,
+          valor: doc.data().valor,
+          data: doc.data().data?.toDate?.() || new Date(),
+        }));
+        setDespesas(filtrarUltimos7Dias(lista));
+      });
+    
+      return () => unsubscribe(); // limpa o listener ao sair
+    }, [uid]);
 
-return (
-    <DespesaSaida despesas={filtrarUltimos7Dias(DUMMY_DESPESAS)} periodo={'Últimos 7 dias'}/>
-)
+  return (
+      <DespesaSaida despesas={despesas} periodo={'Total'}/>
+  )
 }
 
 export default DespesaRecentes;

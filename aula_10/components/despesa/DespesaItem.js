@@ -1,12 +1,21 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 function getDataFormatada(data){
     return data.getDate() + '/' + (data.getMonth() + 1) + '/' + data.getFullYear();
 }
 
 function DespesaItem({item}){
+    const navigation = useNavigation();
+
+    function despesaPressHandler(){
+        navigation.navigate('GerenciarDespesa', {
+            despesaId: item.id
+        });
+    }
+    
     return (
-        <Pressable>
+        <Pressable onPress={despesaPressHandler}>
             <View style={styles.itemContainer}>
                 <View style={styles.itemText}>
                     <Text>{getDataFormatada(item.data)}</Text>

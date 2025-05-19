@@ -21,7 +21,7 @@ function DespesaRecentes() {
         id: '2',
         descricao: 'Conta de Agua',
         valor: 40.99,
-        data: new Date(2025,4,10)
+        data: new Date(2025,4,17)
     }]
 
 return (

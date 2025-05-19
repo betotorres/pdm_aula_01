@@ -7,6 +7,7 @@ import DespesaRecentes from './screens/DespesaRecentes';
 import TodasDespesas from './screens/TodasDespesas';
 import {Ionicons} from '@expo/vector-icons';
 import IconButton from './components/IconButton';
+import AuthProvider from './src/auth-contexto';
 
 export default function App() {
 
@@ -48,11 +49,13 @@ function BottonTabScreen(){
 const Stack = createNativeStackNavigator();
   return (
   <NavigationContainer>
+    <AuthProvider>
       <Stack.Navigator>
         <Stack.Screen name="Despesas" component={BottonTabScreen} 
             options={{headerShown:false}}/>
         <Stack.Screen name="GerenciarDespesa" component={GerenciarDespesa} />
       </Stack.Navigator>
+      </AuthProvider>
     </NavigationContainer>
     );}
 
